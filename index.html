@@ -85,18 +85,60 @@
             <section class="publications-section" id="publications">
                 <div class="content-card">
                     <h2>Publications</h2>
-                    <ul class="publications-list">
-                        <li class="publication-item">
-                            <div class="publication-content">
-                                <h3>Minimizing Inconsistency in Pairwise Comparison Matrices Using Evolutionary Algorithms</h3>
-                                <a href="Minimizing_Inconsistency_in_Pairwise_Comparison_Matrices_Using_Evolutionary_Algorithms.pdf" class="pdf-link" target="_blank" rel="noopener noreferrer">
-                                    <i class="fas fa-file-pdf"></i> Preprint PDF
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
+                    <div class="search-bar-container">
+                         <input type="text" id="publicationSearch" onkeyup="filterPublications()" placeholder="Search publications...">
+                    </div>
+                    <div class="table-container">
+                        <table class="publications-table">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" onclick="sortTable(0)">Year <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" onclick="sortTable(1)">Type <i class="fas fa-sort"></i></th>
+                                    <th>Publication</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!--
+                                ==========================================================================
+                                HOW TO ADD A NEW PUBLICATION:
+                                ==========================================================================
+
+                                1. COPY the template `<tr>...</tr>` block below (between --- START TEMPLATE --- and --- END TEMPLATE ---).
+                                2. PASTE the copied block directly below this comment block (or where you want the publication chronologically).
+                                3. FILL IN the details for your publication:
+                                   - Replace YYYY with the year.
+                                   - Replace "Publication Type" with the correct type (e.g., Journal article, Conference proceedings).
+                                   - Replace author names, making sure to wrap B. Shajari with <u>B. Shajari</u>.
+                                   - Replace "Title of the Publication" with the actual title, keeping the <strong></strong> tags around it.
+                                   - Replace "Journal or Conference Name" and the second YYYY.
+                                   - For links (DOI, Preprint, Bib):
+                                     - Replace "#" in the <a href="#"> with the actual URL.
+                                     - For DOI links, replace "DOI_LINK_TEXT" with the actual DOI (e.g., 10.1234/abc.5678).
+                                     - Ensure the links appear in the order: DOI, Preprint, Bib.
+                                     - If a specific link type is not available, DELETE that entire link element (e.g., delete `[<a href="#">Preprint</a>]`).
+
+                                --- START TEMPLATE (Copy the <tr>...</tr> block below) ---
+                                <tr>
+                                    <td>YYYY</td>
+                                    <td>Publication Type</td>
+                                    <td>Author 1, <u>B. Shajari</u>, Author 3. "<strong>Title of the Publication</strong>". In: Journal or Conference Name. YYYY. [<a href="#" target="_blank" rel="noopener noreferrer">DOI_LINK_TEXT</a>] [<a href="#">Preprint</a>] [<a href="#">bib</a>]</td>
+                                </tr>
+                                --- END TEMPLATE ---
+                                -->
+
+                                <!-- PASTE NEW PUBLICATION ROWS BELOW THIS LINE -->
+                
+                                <tr>
+                                    <td>2025</td>
+                                    <td>Conference proceedings</td>
+                                    <td>A. Sayadi, <u>B. Shajari</u>, and R. Janicki. "<strong>Minimizing Inconsistency in Pairwise Comparison Matrices Using Genetic Algorithm</strong>". In: 2025 59th Annual Conference on Information Sciences and Systems(CISS). <a href="https://doi.org/10.1109/CISS64860.2025.10944754" target="_blank" rel="noopener noreferrer">10.1109/CISS64860.2025.10944754</a> [<a href="Minimizing_Inconsistency_in_Pairwise_Comparison_Matrices_Using_Evolutionary_Algorithms.pdf">Preprint</a>] [<a href="Minimiz2025.txt" target="_blank" rel="noopener noreferrer">bib</a>]</td>
+                                </tr>
+                                <!-- Add more publications here -->
+                                
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            
             </section>
         </main>
     </div>
@@ -106,3 +148,4 @@
     <script src="script.js"></script>
 </body>
 </html> 
+
