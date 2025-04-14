@@ -93,3 +93,133 @@ scrollToTopButton.addEventListener('click', function() {
         behavior: 'smooth'
     });
 });
+
+// Publications Table Functionality
+function filterPublications() {
+    const input = document.getElementById('publicationSearch');
+    const filter = input.value.toUpperCase();
+    const table = document.querySelector('.publications-table');
+    const tr = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+    for (let i = 0; i < tr.length; i++) {
+        // Check all cells (td) in the row
+        let display = false;
+        const td = tr[i].getElementsByTagName('td');
+        for (let j = 0; j < td.length; j++) {
+            if (td[j]) {
+                const txtValue = td[j].textContent || td[j].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    display = true;
+                    break; // Found a match in this row, no need to check other cells
+                }
+            }
+        }
+        tr[i].style.display = display ? '' : 'none';
+    }
+}
+
+let sortDirections = {}; // Store sort direction for each column index
+
+function sortTable(columnIndex) {
+    const table = document.querySelector('.publications-table');
+    const tbody = table.getElementsByTagName('tbody')[0];
+    const rows = Array.from(tbody.getElementsByTagName('tr'));
+    const header = table.getElementsByTagName('thead')[0].getElementsByTagName('th')[columnIndex];
+    const headers = table.getElementsByTagName('thead')[0].getElementsByTagName('th');
+
+    // Determine sort direction (initialize or toggle)
+    const currentDirection = sortDirections[columnIndex] || 'asc'; // Default to ascending
+    const direction = currentDirection === 'asc' ? 'desc' : 'asc';
+    sortDirections = {}; // Reset other column directions
+    sortDirections[columnIndex] = direction;
+
+    // Remove active class and icons from all headers
+    for (let i = 0; i < headers.length; i++) {
+        headers[i].classList.remove('active', 'asc', 'desc');
+        const icons = headers[i].querySelectorAll('.fas');
+        icons.forEach(icon => {
+            icon.classList.remove('fa-sort-up', 'fa-sort-down');
+            if (icon.classList.contains('fa-sort')) {
+                 icon.style.display = ''; // Show default sort icon
+            } else {
+                 icon.style.display = 'none'; // Hide specific sort icons
+            }
+        });
+        // Ensure the default sort icon exists if needed
+        if (!headers[i].querySelector('.fa-sort')) {
+            const defaultIcon = document.createElement('i');
+            defaultIcon.className = 'fas fa-sort';
+            headers[i].appendChild(defaultIcon);
+        }
+         // Add back directional icons if they don't exist
+        if (!headers[i].querySelector('.fa-sort-up')) {
+            const upIcon = document.createElement('i');
+            upIcon.className = 'fas fa-sort-up';
+            upIcon.style.display = 'none'; // Hide initially
+            headers[i].appendChild(upIcon);
+        }
+        if (!headers[i].querySelector('.fa-sort-down')) {
+            const downIcon = document.createElement('i');
+            downIcon.className = 'fas fa-sort-down';
+            downIcon.style.display = 'none'; // Hide initially
+            headers[i].appendChild(downIcon);
+        }
+    }
+
+    // Add active class and correct icon to the clicked header
+    header.classList.add('active', direction);
+    const sortIcon = header.querySelector(direction === 'asc' ? '.fa-sort-up' : '.fa-sort-down');
+    const defaultIcon = header.querySelector('.fa-sort');
+     if (defaultIcon) defaultIcon.style.display = 'none'; // Hide default icon
+     if (sortIcon) sortIcon.style.display = ''; // Show correct directional icon
+
+
+    rows.sort((a, b) => {
+        const cellA = a.getElementsByTagName('td')[columnIndex];
+        const cellB = b.getElementsByTagName('td')[columnIndex];
+        const valA = cellA ? cellA.textContent || cellA.innerText : '';
+        const valB = cellB ? cellB.textContent || cellB.innerText : '';
+
+        // Handle numeric sorting for the 'Year' column (index 0)
+        if (columnIndex === 0) {
+            return direction === 'asc' ? valA - valB : valB - valA;
+        }
+
+        // Handle string sorting for other columns
+        const comparison = valA.localeCompare(valB, undefined, { sensitivity: 'base' });
+        return direction === 'asc' ? comparison : -comparison;
+    });
+
+    // Re-append sorted rows to the tbody
+    rows.forEach(row => tbody.appendChild(row));
+}
+
+// Add initial sort icons to sortable headers on load
+document.addEventListener('DOMContentLoaded', () => {
+    const table = document.querySelector('.publications-table');
+    if (table) {
+        const headers = table.querySelectorAll('th.sortable');
+        headers.forEach(header => {
+            if (!header.querySelector('.fa-sort')) {
+                const icon = document.createElement('i');
+                icon.className = 'fas fa-sort';
+                header.appendChild(icon);
+            }
+             if (!header.querySelector('.fa-sort-up')) {
+                const upIcon = document.createElement('i');
+                upIcon.className = 'fas fa-sort-up';
+                upIcon.style.display = 'none'; // Hide initially
+                header.appendChild(upIcon);
+            }
+            if (!header.querySelector('.fa-sort-down')) {
+                const downIcon = document.createElement('i');
+                downIcon.className = 'fas fa-sort-down';
+                downIcon.style.display = 'none'; // Hide initially
+                header.appendChild(downIcon);
+            }
+        });
+        // Optional: Default sort by year descending on load
+        // sortTable(0); // Sort by Year initially
+        // sortTable(0); // Call again to make it descending
+    }
+});
