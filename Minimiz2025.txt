@@ -1,0 +1,10 @@
+@INPROCEEDINGS{10944754,
+  author={Sayadi, Atiyeh and Shajari, Baran and Janicki, Ryszard},
+  booktitle={2025 59th Annual Conference on Information Sciences and Systems (CISS)}, 
+  title={Minimizing Inconsistency in Pairwise Comparison Matrices Using Genetic Algorithm}, 
+  year={2025},
+  volume={},
+  number={},
+  pages={1-6},
+  keywords={Evolutionary computation;Reliability;Indexes;Genetic algorithms;Convergence;Pairwise Comparison;Evolutionary Algorithm;Inconsistency Reduction;Distance-Based Inconsistency;Genetic Algorithm},
+  doi={10.1109/CISS64860.2025.10944754}}
